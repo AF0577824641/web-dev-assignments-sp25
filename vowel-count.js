@@ -1,5 +1,5 @@
 function countVowels(str) {
-  // Count the number of vowels in a given string.
+  // Counts the number of vowels in a given string.
   const count = str.match(/[aeiou]/gi)?.length || 0;
   return count;
 }
