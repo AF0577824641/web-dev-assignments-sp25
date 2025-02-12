@@ -62,7 +62,7 @@ if (isNaN(year)) {
 } else {
   const filter = books.filter(
     // Filters books by year published
-    (books) => books.yearPublished >= parseInt(year)
+    (books) => books.yearPublished >= Number(year)
   );
   // If no books are found, print error message
   if (filter.length === 0) {
