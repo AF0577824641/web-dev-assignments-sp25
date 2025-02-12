@@ -1,4 +1,6 @@
-# Spring 2025 - Web DevelopmenTontains three JavaScriptxercises for INFO 638 Web Development.
+# Spring 2025 - Web Development
+
+This repo contains three class assigments for INFO 638 Web Development.
 
 ## Week 03 - (Assignment 1)
 
