@@ -2,7 +2,7 @@ const genres = [
   {
     name: "Science Fiction",
     description:
-      "Fiction dealing with advanced technology, space exploration, and scientific concepts",
+      "Fiction dealing with advanced technology and space exploration",
   },
   {
     name: "Fantasy",
