@@ -1,6 +1,20 @@
 const books = [
-  { title: "Leviathan Wakes", publishingYear: 2011, authorIds: ["0", "1"], genreIds: [] },
+  {
+    title: "Leviathan Wakes",
+    publishingYear: 2011,
+    authorIds: ["0", "1"],
+    genreIds: [],
+  },
   { title: "Caliban's War", publishingYear: 2012, authorIds: [], genreIds: [] },
+
+  {
+    title: "Abaddon's Gate",
+    publishingYear: 2013,
+    authorIds: [],
+    genreIds: [],
+  },
+  { title: "Cibola Burn", publishingYear: 2014, authorIds: [], genreIds: [] },
+  { title: "Nemesis Games", publishingYear: 2015, authorIds: [], genreIds: [] },
 ];
 
 exports.all = books;
@@ -24,7 +38,7 @@ exports.upsert = (book) => {
   if (book.genreIds && !Array.isArray(book.genreIds)) {
     book.genreIds = [book.genreIds];
   }
-  // Ensure authorIds and genreIds are initialized if they don't exist
+
   if (!book.authorIds) {
     book.authorIds = [];
   }
