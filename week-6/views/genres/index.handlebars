@@ -1,0 +1,24 @@
+<h1>Genres</h1>
+<a href="/genres/new">New Genre</a>
+
+{{#if genres.length}}
+<table class="table">
+    <thead>
+        <tr>
+            <th>Name</th>
+            <th>Description</th>
+        </tr>
+    </thead>
+    <tbody>
+        {{#each genres}}
+            <tr>
+                <td>{{this.name}}</td>
+                <td>{{this.description}}</td>
+                <td>
+                    <a href="/genres/{{@index}}">View</a>
+                    <a href="/genres/edit?id={{@index}}">Edit</a>
+                </td>
+            </tr>
+        {{/each}}
+    </tbody>
+</table>
