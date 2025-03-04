@@ -25,6 +25,10 @@ exports.update = (genre) => {
   genres[genre.id] = genre;
 };
 
+exports.updateAtIndex = (idx, genre) => {
+  genres[idx] = genre;
+};
+
 exports.upsert = (genre) => {
   if (genre.id) {
     exports.update(genre);
