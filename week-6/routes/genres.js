@@ -2,34 +2,44 @@ const express = require("express");
 const router = express.Router();
 const Genre = require("../models/genre");
 
-router.get("/", (req, res) => {
-  res.render("genres/index", { genres: Genre.all });
+router.get("/", function (req, res, next) {
+  res.render("genres/index", {
+    title: "BookedIn || Genres",
+    genres: Genre.all,
+  });
 });
 
-router.get("/new", (req, res) => {
-  res.render("genres/form", { genre: {} });
+router.get("/form", function (req, res, next) {
+  res.render("genres/form", {
+    title: "BookedIn || Genres",
+    genre: {},
+  });
 });
-
-router.post("/upsert", (req, res) => {
-  console.log("Request body:", req.body);
-  const { id } = req.body;
+router.post("/upsert", async (req, res) => {
+  console.log("body: " + JSON.stringify(req.body));
+  Genre.upsert(req.body);
   res.redirect(303, "/genres");
 });
-
-router.get("/edit", (req, res) => {
-  const id = parseInt(req.query.id);
-  const genre = Genre.get(id);
-  res.render("genres/form", { genre });
-});
-
-router.get("/:id", (req, res) => {
-  const id = parseInt(req.params.id);
-  const genre = Genre.get(id);
-
+router.get("/edit", async (req, res, next) => {
+  let genreIndex = parseInt(req.query.id);
+  let genre = Genre.get(genreIndex);
   if (!genre) {
-    return res.status(404).render("error", { error: "Genre not found" });
+    return res.status(303).render("error", { error: "Genre not found" });
   }
-  res.render("genres/show", { genre, id });
+  genre.id = genreIndex;
+  console.log("Editing genre:", genre);
+  res.render("genres/form", {
+    title: "BookedIn || Genres",
+    genre,
+    genreIndex,
+  });
+});
+router.get("/show/:id", async (req, res, next) => {
+  var templateVars = {
+    title: "BookedIn || show",
+    genre: Genre.get(req.params.id)
+  };
+  res.render("genres/show", templateVars);
 });
 
 module.exports = router;
