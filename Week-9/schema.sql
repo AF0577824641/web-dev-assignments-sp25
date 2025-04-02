@@ -29,3 +29,5 @@ insert into books (title, publishing_year) values ('Babylon’s Ashes', 2016);
 insert into books (title, publishing_year) values ('Persepolis Rising', 2017);
 insert into books (title, publishing_year) values ('Tiamat’s Wrath', 2018);
 insert into books (title, publishing_year) values ('Strange Dogs', 2017);
+insert into books (title, publishing_year) values ('The Fifth Season', 2015);
+);
