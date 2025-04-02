@@ -1,5 +1,6 @@
 const express = require("express");
 const router = express.Router();
+
 const Comment = require("../models/comment");
 const Book = require("../models/book");
 
@@ -16,7 +17,7 @@ router.post("/create", (req, res) => {
   };
 
   Comment.add(newComment);
-  return res.redirect(`/books/show/${req.body.bookId}`);
+  res.redirect(303, `/books/show/${req.body.bookId}`);
 });
 
 router.get("/edit/:id", (req, res) => {
@@ -25,18 +26,20 @@ router.get("/edit/:id", (req, res) => {
   }
 
   const comment = Comment.get(req.params.id);
-  
+
   if (!comment || comment.userEmail !== req.session.currentUser.email) {
-    return res.redirect(`/books/show/${comment ? comment.bookId : ''}`);
+    return res.redirect(`/books/show/${comment ? comment.bookId : ""}`);
   }
 
   const book = Book.get(comment.bookId);
 
-  res.render("comments/edit", {
-    title: "Edit Comment",
+  const templateVars = {
+    title: "BookedIn || Edit Comment",
     comment: comment,
     book: book,
-  });
+  };
+
+  res.render("comments/edit", templateVars);
 });
 
 router.post("/update", (req, res) => {
@@ -53,7 +56,7 @@ router.post("/update", (req, res) => {
   comment.text = req.body.text.trim();
   Comment.update(comment);
 
-  return res.redirect(`/books/show/${comment.bookId}`);
+  res.redirect(303, `/books/show/${comment.bookId}`);
 });
 
 module.exports = router;
