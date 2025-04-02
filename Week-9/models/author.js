@@ -1,36 +1,47 @@
-const db = require('../database')
+const authors = [
+  { id: 1, firstName: "James", lastName: "S. A. Corey" },
+  { id: 2, firstName: "Craig", lastName: "Alanson" },
+  { id: 3, firstName: "Cixin", lastName: "Liu" },
+  { id: 4, firstName: "David", lastName: "Grann" },
+];
+
+let nextId = 5; // For generating new IDs
 
 exports.all = async () => {
- const { rows } = await db.getPool().query("select * from authors order by id");
- return db.camelize(rows);
-}
+  return authors;
+};
 
+exports.get = async (id) => {
+  return authors.find((author) => author.id === parseInt(id)) || null;
+};
 
-// const authors = [
-//   {firstName: "James", lastName: "S. A. Corey"},
-//   {firstName: "Craig", lastName: "Alanson"},
-//   {firstName: "Cixin", lastName: "Liu"},
-//   {firstName: "David", lastName: "Grann"},
-// ]
+exports.add = async (author) => {
+  const newAuthor = {
+    id: nextId++,
+    firstName: author.firstName,
+    lastName: author.lastName,
+  };
+  authors.push(newAuthor);
+  return newAuthor;
+};
 
-// exports.all = authors
-
-exports.add = (author) => {
-  authors.push(author);
-}
-
-exports.get = (idx) => {
-  return authors[idx];
-}
-
-exports.update = (author) => {
-  authors[author.id] = author;
-}
-
-exports.upsert = (author) => {
-  if (author.id) {
-    exports.update(author);
-  } else {
-    exports.add(author);
+exports.update = async (author) => {
+  const index = authors.findIndex((a) => a.id === parseInt(author.id));
+  if (index !== -1) {
+    authors[index] = {
+      id: parseInt(author.id),
+      firstName: author.firstName,
+      lastName: author.lastName,
+    };
+    return authors[index];
   }
-}
+  return null;
+};
+
+exports.upsert = async (author) => {
+  if (author.id) {
+    return await exports.update(author);
+  } else {
+    return await exports.add(author);
+  }
+};
